@@ -14,3 +14,16 @@ Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
 Server-->Browser:  [{ content: "tst", date: "2022-12-13T14:04:40.888Z" },...]
 Note over Browser: Browser executes the event handler <br/> that renders notes on display
 ```
+```mermaid
+sequenceDiagram
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+Server-->>Browser: HTML-code
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+Server-->Browser: main.css
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+Server-->Browser: spa.js
+Note over Browser: Browser starts executing js-code <br/> that requests JSON data from server
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+Server-->Browser:  [{ content: "tst", date: "2022-12-13T14:04:40.888Z" },...]
+Note over Browser: Browser executes the event handler <br/> that renders notes on display
+```
