@@ -1,22 +1,16 @@
 ```mermaid
 sequenceDiagram
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
-server-->browser: HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
-server-->browser: main.css
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
-server-->browser: main.js
-
-note over browser:
-browser starts executing js-code
-that requests JSON data from server 
-end note
-
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
-
-note over browser:
-browser executes the event handler
-that renders notes to display
-end note
+Note right of Browser: Send note text
+Browser->>Server: HTTP POST [note_text] https://studies.cs.helsinki.fi/exampleapp/new_note
+Server-->>Browser: HTTP 302
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+Server-->>Browser: HTML-code
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+Server-->Browser: main.css
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+Server-->Browser: main.js
+Note over Browser: Browser starts executing js-code <br/> that requests JSON data from server
+Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+Server-->Browser:  [{ content: "tst", date: "2022-12-13T14:04:40.888Z" },...]
+Note over Browser: Browser executes the event handler <br/> that renders notes on display
 ```
