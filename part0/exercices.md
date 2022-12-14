@@ -1,7 +1,8 @@
 # 0.4: New note diagram
 ```mermaid
 sequenceDiagram
-Note right of Browser: Send note text
+Note over Browser: User writes note and press submit
+Note over Browser: Send note text
 Browser->>Server: HTTP POST [note_text] https://studies.cs.helsinki.fi/exampleapp/new_note
 Server-->>Browser: HTTP 302
 Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
@@ -32,7 +33,8 @@ Note over Browser: Browser executes the event handler <br/> that renders notes o
 # 0.6: New note in Single page app diagram
 ```mermaid
 sequenceDiagram
-Note right of Browser: Send note text
+Note over Browser: User writes note and press submit
+Note over Browser: Send note text
 Browser->>Server: HTTP POST [note_text] https://studies.cs.helsinki.fi/exampleapp/new_note_spa
 Server-->>Browser: HTTP 201
 Note over Browser: Browser executes js-code <br/> to redraw notes
