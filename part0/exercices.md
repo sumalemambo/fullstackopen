@@ -27,3 +27,10 @@ Browser->>Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
 Server-->Browser:  [{ content: "tst", date: "2022-12-13T14:04:40.888Z" },...]
 Note over Browser: Browser executes the event handler <br/> that renders notes on display
 ```
+```mermaid
+sequenceDiagram
+Note right of Browser: Send note text
+Browser->>Server: HTTP POST [note_text] https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+Server-->>Browser: HTTP 201
+Note over Browser: Browser executes js-code <br/> to redraw notes
+```
