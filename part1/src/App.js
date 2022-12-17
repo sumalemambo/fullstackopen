@@ -1,3 +1,49 @@
+// Header component
+const HeaderCourse = (props) => {
+  // Use props to pass the contents
+  // to the function.
+  
+  return (
+    <div>
+      <h1>{props.courseName}</h1>
+    </div>
+  )
+}
+
+// Content component
+const Content = (props) => {
+  // Use props to pass the contents
+  // to the function.
+
+  return (
+    <div>
+      <p>
+        {props.part1} {props.exercises1}
+      </p>
+      <p>
+        {props.part2} {props.exercises2}
+      </p>
+      <p>
+        {props.part3} {props.exercises3}
+      </p>
+    </div>
+  )
+}
+
+// Total component
+const Total = (props) => {
+  // Use props to pass number of exercices
+  // to the function.
+
+  return (
+    <div>
+      <p>
+        Number of exercices {props.exercises1 + props.exercises2 + props.exercises3}
+      </p>
+    </div>
+  )
+}
+
 const App = () => {
   const course = 'Half Stack application development'
   const part1 = 'Fundamentals of React'
@@ -9,16 +55,8 @@ const App = () => {
 
   return (
     <div>
-      <h1>{course}</h1>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
+      <HeaderCourse courseName={course}/>
+      <p>HOLAAA</p>
       <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
     </div>
   )
