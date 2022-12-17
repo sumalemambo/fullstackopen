@@ -1,4 +1,4 @@
-# Exercices
+# Exercises
 
 ## 1.1: Course information, step1
 
