@@ -214,4 +214,28 @@ const tSquared = t.map(p => p * p)
 console.log(tSquared)
 // [1, 4, 9] is printed
 
-// 
+// There are two ways to reference a function
+// One is giving a name in a function declaration
+
+function product(a, b) {
+    return a * b
+}
+
+const resultProduct = product(2, 6)
+
+console.log(resultProduct)
+// Result is now 12
+
+// The other way to define a function is using a function
+// expression. In this case there is no need to give the
+// function a name and the definition may reside among
+// the rest of the code.
+
+const average = function(a, b) {
+    return (a + b) / 2
+}
+
+const resultAverage = average(2, 5)
+
+console.log(resultAverage)
+// Result is now 3.5
