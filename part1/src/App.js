@@ -7,8 +7,8 @@ const Header = (props) => {
   )
 }
 
-// Part component
-const Part = (props) => {
+// Content component
+const Content = (props) => {
   return (
     <div>
       <p> {props.part} {props.exercices}</p>
@@ -38,9 +38,9 @@ const App = () => {
     <div>
       <Header course={course} />
 
-      <Part part={part1} exercices={exercises1} />
-      <Part part={part2} exercices={exercises2} />
-      <Part part={part3} exercices={exercises3} />
+      <Content part={part1} exercices={exercises1} />
+      <Content part={part2} exercices={exercises2} />
+      <Content part={part3} exercices={exercises3} />
 
       <Total exercises1={exercises1} exercises2={exercises2} exercises3={exercises3} />
     </div>
