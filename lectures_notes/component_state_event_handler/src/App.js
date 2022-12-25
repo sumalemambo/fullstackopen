@@ -201,6 +201,53 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <App counter={counter} />
 )
 
+The App component is given the value of the counter via counter
+prop. This component renders the value to the screen. What
+happens when the value of counter changes? Even if we were to
+add the following 
+
+counter += 1
+
+the component won't re-render. We can get the component to
+re-render by calling the render method a second time,
+e.g in the following way: (this goes in index.js)
+
+let counter = 1
+
+const refresh() => {
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <App counter={counter}/>
+  )
+}
+
+refresh()
+counter += 1
+refresh()
+counter += 1
+refresh()
+
+The re-rendering command has been wrapped inside of the
+refresh function to cut down on the amount of copy-pasted
+code.
+
+Now the component renders three times, first with the value
+1, then 2, and finally 3. However, the values 1 and 2 are
+displayed on the screen for such a short amount of time
+that they can't be noticed.
+
+We can implement a slightly more interesting functionality
+by re-rendering and incrementing the counter every second
+by using setInterval:
+
+setInterval(() => {
+  refresh()
+  counter += 1
+}, 1000)
+
+Making repeated calls to the render method is not the
+recommended way to re-render components. Next, we'll
+introduce a better way of accomplishing this effect.
+
 */
 
 const Hello = ({ name, age }) => {
@@ -217,16 +264,10 @@ const Hello = ({ name, age }) => {
   )
 }
 
-const App = () => {
-  const name = 'Peter'
-  const age = 10
-
+const App = (props) => {
+  const {counter} = props
   return (
-    <div>
-      <h1>Greetings</h1>
-      <Hello name="Maya" age={26 + 10} />
-      <Hello name={name} age={age} />
-    </div>
+    <div>{counter}</div>
   )
 }
 
