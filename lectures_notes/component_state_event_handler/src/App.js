@@ -248,27 +248,159 @@ Making repeated calls to the render method is not the
 recommended way to re-render components. Next, we'll
 introduce a better way of accomplishing this effect.
 
-*/
+# Stateful component
 
-const Hello = ({ name, age }) => {
+All of our components up till now have been simple in
+the sense that they have not contained any state that
+could change during the lifecycle of the component.
 
-  const bornYear = () => new Date().getFullYear() - age
+Next, let's add state to our application's App
+component with the help of React's state hook.
 
-  return (
-    <div>
-      <p>
-        Hello {name}, you are {age} years old
-      </p>
-      <p>So you were probably born in {bornYear()}</p>
-    </div>
+We will change the aplication as follows. index.js
+goes back to 
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+
+import App from './App'
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+
+and App.js changes to the following
+
+
+import { useState } from 'react'
+
+const App = () => {
+
+  // Destructuring can use both {} or [], for array
+  // we use []
+  const [ counter, setCounter ] = useState(0)
+
+  setTimeout(
+    () => setCounter(counter + 1),
+    1000
   )
-}
 
-const App = (props) => {
-  const {counter} = props
   return (
     <div>{counter}</div>
   )
 }
 
-export default App;
+export default App
+
+In the first row, the file imports useState function
+
+import { useState } from 'react'
+
+The function body that defines the component begins
+with the function call:
+
+const [ counter, setCounter ] = useState(0)
+
+The function call adds state to the component and
+renders it initialized with the value of zero. The
+function returns an array that contains two items.
+We assign the items to the variables counter and
+setCounter by using the destructuring assigment
+syntax shown earlier.
+
+The counter variable is assigned the initial value
+of state which is zero. The variable setCounter is
+assigned to a function that will be used to modify
+the state.
+
+The application calls the setTimeout function and
+passes it two parameters: a function to increment
+the counter state and a timeout of one second:
+
+setTimeout(
+  () => setCounter(counter + 1),
+  1000
+)
+
+The function passed as the first parameter to the
+setTimeout function is invoked one second after
+calling the setTimeout function.
+
+() => setCounter(counter + 1)
+
+When state modifying function setCounter is called,
+React re-renders the component which means that the
+function body of the component function gets re-executed:
+
+() => {
+  const [ counter, setCounter ] = useState(0)
+
+  setTimeout(
+    () => setCounter(counter + 1),
+    1000
+  )
+
+  return (
+    <div>{counter}</div>
+  )
+}
+
+The second time the component function is executed it calls
+the useState function and returns the new value of the state: 1.
+Executing the function body again also makes a new function call
+to setTimeout, which executes the one second timeout and increments
+the counter state again. Because the counter variable is 1,
+incrementing the value by 1 is essentially the same as an
+expression setting the value of counter to 2.
+
+() => setCounter(2)
+
+Meanwhile, the old value of counter - "1" is rendered to the screen
+
+Every time the setCounter modifies the state it causes the component
+to re-render. The value of the state will be incrementing again
+after one second, and this will continue to repeat for as long
+as the application is running.
+
+If the component doesn't render when you think it should, or if it
+render at the "wrong time", you can debug the application by logging
+the values of the component's variables to the console. If we make
+the following additions to our code:
+
+const App = () => {
+  const [ counter, setCounter ] = useState(0)
+
+  setTimeout(
+    () => setCounter(counter + 1),
+    1000
+  )
+
+  console.log('rendering...', counter)
+  return (
+    <div>{counter}</div>
+  )
+}
+
+# Event handling
+
+
+
+*/
+
+import { useState } from 'react'
+
+const App = () => {
+
+  // Destructuring can use both {} or []
+  const [ counter, setCounter ] = useState(0)
+
+  setTimeout(
+    () => setCounter(counter + 1),
+    1000
+  )
+
+  console.log('rendering...', counter)
+  return (
+    <div>{counter}</div>
+  )
+}
+
+export default App
