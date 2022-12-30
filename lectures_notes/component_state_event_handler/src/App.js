@@ -381,6 +381,176 @@ const App = () => {
 
 # Event handling
 
+We have already mentioned event handlers that
+are registered to be called when specific events
+occur a few times in part 0.
+
+Lets change the application so that increasing the
+counter happens when a user clicks a button, which
+is implemented with the button element.
+
+Button elements support so-called mouse events, of
+which click is the most common event. The click event
+on a button can also be triggered with the keyboard
+or a touch screen despite the name mouse event.
+
+In React, registering an event handler function
+to the click event happens like this:
+
+const App = () => {
+
+  // Destructuring can use both {} or []
+  const [ counter, setCounter ] = useState(0)
+
+  const handleClick = () => {
+    console.log('clicked')
+  }
+
+  return (
+    <div>
+      <div>{counter}</div>
+      <button onClick={handleClick}>
+        plus
+      </button>
+    </div>
+  )
+}
+
+We set the value of the button's onClick attribute
+to be a reference to the handleClick function
+defined in the code.
+
+Now every click of the plus button causes the 
+handleClick function to be called, meaning that
+every click will log a clicked message to the browser
+console.
+
+The event handler function can also be defined
+directly in the value assigment of the onClick
+attribute.
+
+const App = () => {
+
+  // Destructuring can use both {} or []
+  const [ counter, setCounter ] = useState(0)
+
+  const handleClick = () => {
+    console.log('clicked')
+  }
+
+  return (
+    <div>
+      <div>{counter}</div>
+      <button onClick={() => {console.log('clicked')}}>
+        plus
+      </button>
+    </div>
+  )
+}
+
+By changing the event handler to the following form:
+
+<button onClick={() => {setCounter(counter + 1)}}>
+  plus
+</button>
+
+we achieve the desired behavior, meaning that the value
+of counter is increased by one and the component gets 
+re-rendered.
+
+Lets also add a button for resetting the counter:
+const App = () => {
+
+  // Destructuring can use both {} or []
+  const [ counter, setCounter ] = useState(0)
+
+  const handleClick = () => {
+    console.log('clicked')
+  }
+
+  return (
+    <div>
+      <div>{counter}</div>
+      <button onClick={() => {setCounter(counter + 1)}}>
+        plus
+      </button>
+      <button onClick={() => {setCounter(0)}}>
+        zero
+      </button>
+    </div>
+  )
+}
+
+# Event handler is a function
+
+We define the event handlers for our buttons where
+we declare their onClick attributes:
+
+<button onClick={() => setCounter(counter + 1)}> 
+  plus
+</button>
+
+What if we tried to define the event handlers in
+a simpler form?
+
+<button onClick={setCounter(counter + 1)}> 
+  plus
+</button>
+
+This would completely break our application!
+
+Whats going on? An event handler is supposed to
+be either a function or a function reference, and
+when we write:
+
+<button onClick={setCounter(counter + 1)}>
+
+the event handler is actually a function call. In
+many situations this is ok, but not in this particular
+situation. In the beginning the value of the counter
+variable is 0. When React renders the component for
+the first time, it executes the function call
+setCounter(0 + 1), and changes the value of the
+component's state to 1. This will cause the component
+to be re-rendered, React will execute the setCounter
+function call again, and the state will change leading
+to another rerender...
+
+Lets define the event handlers like we did before:
+
+<button onClick={() => setCounter(counter + 1)}> 
+  plus
+</button>
+
+The setCounter function is called only when a user
+clicks the button.
+
+Usually defining event handlers within JSX-templates
+is not a good idea.
+
+Lets separate the event handlers into separate functions:
+
+const App = () => {
+
+  // Destructuring can use both {} or []
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => {setCounter(counter + 1)}
+
+  const setToZero = () => {setCounter(0)}
+
+  return (
+    <div>
+      <div>{counter}</div>
+      <button onClick={increaseByOne}>
+        plus
+      </button>
+      <button onClick={setToZero}>
+        zero
+      </button>
+    </div>
+  )
+}
 
 
 */
@@ -392,14 +562,20 @@ const App = () => {
   // Destructuring can use both {} or []
   const [ counter, setCounter ] = useState(0)
 
-  setTimeout(
-    () => setCounter(counter + 1),
-    1000
-  )
+  const increaseByOne = () => {setCounter(counter + 1)}
 
-  console.log('rendering...', counter)
+  const setToZero = () => {setCounter(0)}
+
   return (
-    <div>{counter}</div>
+    <div>
+      <div>{counter}</div>
+      <button onClick={increaseByOne}>
+        plus
+      </button>
+      <button onClick={setToZero}>
+        zero
+      </button>
+    </div>
   )
 }
 
