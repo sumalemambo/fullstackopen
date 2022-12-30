@@ -670,6 +670,22 @@ const App = () => {
 
 # Changes in state cause rerendering
 
+When the application starts, the code in App is executed. 
+This code uses a useState hook to create the application state,
+setting an initial value of the variable counter.
+When one of the buttons is clicked, the event handler is executed.
+The event handler changes the state of the App component with the
+setCounter function. Calling a function which changes the state
+causes the component to rerender.
+
+So, if a user clicks the plus button, the button's event handler
+changes the value of counter to 1, and the App component is
+rerendered. This causes its subcomponents Display and Button
+to also be re-rendered
+
+
+
+
 
 
 */
