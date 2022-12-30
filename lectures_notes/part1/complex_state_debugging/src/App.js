@@ -235,11 +235,27 @@ However, don't do this. As mentioned previously, the state
 of React components like allClicks must not be mutated
 directly.
 
+# Conditional rendering
 
+Let's modify our application so that the rendering of the
+clicking history is handled by a new History component:
 
-*/
-
-import { useState } from 'react'
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
+  else {
+    return (
+      <div>
+        button press history: {props.allClicks.join(' ')}
+      </div>
+    )
+  }
+}
 
 const App = () => {
   const [left, setLeft] = useState(0)
@@ -266,7 +282,119 @@ const App = () => {
         right
       </button>
       {right}
-      <p>{allClicks.join(' ')}</p>
+      <History allClicks={allClicks}/>
+    </div>
+  )
+}
+
+Let's make on last modification to our application by
+refactoring it to use the Button component that we defined
+earlier on:
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
+  else {
+    return (
+      <div>
+        button press history: {props.allClicks.join(' ')}
+      </div>
+    )
+  }
+}
+
+const Button = ({ handleClick, text }) => {
+  return (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+}
+
+const App = () => {
+  const [left, setLeft] = useState(0)
+  const [right,setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
+  }
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+  }
+
+  return (
+    <div>
+      {left}
+      <Button handleClick={handleLeftClick} text='left'/>
+      <Button handleClick={handleRightClick} text='right'/>
+      {right}
+      <History allClicks={allClicks}/>
+    </div>
+  )
+}
+
+
+
+*/
+
+import { useState } from 'react'
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
+  else {
+    return (
+      <div>
+        button press history: {props.allClicks.join(' ')}
+      </div>
+    )
+  }
+}
+
+const Button = ({ handleClick, text }) => {
+  return (
+    <button onClick={handleClick}>
+      {text}
+    </button>
+  )
+}
+
+const App = () => {
+  const [left, setLeft] = useState(0)
+  const [right,setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
+  }
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+  }
+
+  return (
+    <div>
+      {left}
+      <Button handleClick={handleLeftClick} text='left'/>
+      <Button handleClick={handleRightClick} text='right'/>
+      {right}
+      <History allClicks={allClicks}/>
     </div>
   )
 }
