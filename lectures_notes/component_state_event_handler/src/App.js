@@ -552,10 +552,34 @@ const App = () => {
   )
 }
 
+# Passing state to child components
 
-*/
+It's recommended to write React components that are
+small and reusable across the application and even
+across projects. Let's refactor our application so
+that it's composed of three smaller components, one
+component for displaying the counter and two components
+for buttons.
 
-import { useState } from 'react'
+Let's first implement a Display component that's
+responsible for displaying the value of the counter.
+
+One best practice in React is to lift the state up
+in the component hierarchy. The documentation says:
+
+Often, several components need to reflect the same changing data.
+We recommend lifting the shared state up to their closest
+common ancestor.
+
+So let's place the application's state in the App component
+and pass it down to the Display component through props:
+
+const Display = (props) => {
+  return (
+    <div>{props.counter}</div>
+  )
+}
+
 
 const App = () => {
 
@@ -568,13 +592,130 @@ const App = () => {
 
   return (
     <div>
-      <div>{counter}</div>
+      <Display counter={counter}/>
       <button onClick={increaseByOne}>
         plus
       </button>
       <button onClick={setToZero}>
         zero
       </button>
+    </div>
+  )
+}
+
+Everything still works. When the buttons are clicked
+the App gets re-rendered, all of its children including
+the Display component are also re-rendered.
+
+Next, let's make a Button component for the buttons of
+our application. We have to pass the event handler as well
+as the title of the button through the component's props:
+
+const Button = (props) => {
+  return(
+    <div>
+      <button onClick={props.onClick}>
+        {props.text}
+      </button>
+    </div>
+  )
+}
+
+Our new App component looks like this:
+
+const Display = (props) => {
+  return (
+    <div>{props.counter}</div>
+  )
+}
+
+const Button = (props) => {
+  return(
+    <div>
+      <button onClick={props.onClick}>
+        {props.text}
+      </button>
+    </div>
+  )
+}
+
+
+const App = () => {
+
+  // Destructuring can use both {} or []
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => {setCounter(counter + 1)}
+  const decreaseByOne = () => {setCounter(counter - 1)}
+  const setToZero = () => {setCounter(0)}
+
+  return (
+    <div>
+      <Display counter={counter}/>
+      <Button 
+        onClick={increaseByOne}
+        text='plus'
+      />
+      <Button 
+        onClick={setToZero}
+        text='zero'
+      />
+      <Button
+        onClick={decreaseByOne}
+        text='minus'
+      />
+    </div>
+  )
+}
+
+# Changes in state cause rerendering
+
+
+
+*/
+import { useState } from 'react'
+
+const Display = (props) => {
+  return (
+    <div>{props.counter}</div>
+  )
+}
+
+const Button = (props) => {
+  return(
+    <div>
+      <button onClick={props.onClick}>
+        {props.text}
+      </button>
+    </div>
+  )
+}
+
+
+const App = () => {
+
+  // Destructuring can use both {} or []
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => {setCounter(counter + 1)}
+  const decreaseByOne = () => {setCounter(counter - 1)}
+  const setToZero = () => {setCounter(0)}
+
+  return (
+    <div>
+      <Display counter={counter}/>
+      <Button 
+        onClick={increaseByOne}
+        text='plus'
+      />
+      <Button 
+        onClick={setToZero}
+        text='zero'
+      />
+      <Button
+        onClick={decreaseByOne}
+        text='minus'
+      />
     </div>
   )
 }
