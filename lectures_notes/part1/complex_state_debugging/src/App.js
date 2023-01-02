@@ -636,6 +636,32 @@ is mostly a matter of taste.
 
 # Passing event handlers to child components
 
+Lets extract the button into its own component:
+
+const App = () => {
+  const [value, setValue] = useState(10)
+  
+  const setToValue = (newValue) => {
+    console.log('value now', newValue)
+    setValue(newValue)
+  }
+
+  return (
+    <div>
+      {value}
+      <Button onClick={() => setToValue(1000)} text="thousand"/>
+      <Button onClick={() => setToValue(0)} text="zero"/>
+      <Button onClick={() => setToValue(value + 1)} text="increment"/>
+    </div>
+  )
+}
+
+# Do not define components within components
+
+Let's start displaying the value of the application in it's Display
+component. We will change the application by defining a new component
+inside of the App component.
+
 */
 
 import { useState } from 'react'
@@ -657,13 +683,13 @@ const History = (props) => {
   }
 }
 
-const Button = ({ handleClick, text }) => {
-  return (
-    <button onClick={handleClick}>
-      {text}
+const Button = (props) => (
+  <div>
+    <button onClick={props.onClick}>
+      {props.text}
     </button>
-  )
-}
+  </div>
+)
 
 const App = () => {
   const [value, setValue] = useState(10)
@@ -676,9 +702,9 @@ const App = () => {
   return (
     <div>
       {value}
-      <button onClick={() => setToValue(1000)}>thousand</button>
-      <button onClick={() => setToValue(0)}>reset</button>
-      <button onClick={() => setToValue(value + 1)}>increment</button>
+      <Button onClick={() => setToValue(1000)} text="thousand"/>
+      <Button onClick={() => setToValue(0)} text="zero"/>
+      <Button onClick={() => setToValue(value + 1)} text="increment"/>
     </div>
   )
 }
