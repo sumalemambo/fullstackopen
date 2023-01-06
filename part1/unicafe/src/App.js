@@ -8,7 +8,7 @@ const Button = ({text, onClick}) => {
   )
 }
 
-const Display = ({text, quantity}) => {
+const StatisticsLine = ({text, quantity}) => {
   return (
     <div>
       {text} {quantity}
@@ -20,6 +20,7 @@ const Statistics = ({good, neutral, bad}) => {
   const all = good + neutral + bad
   const average = (good - bad)/all
   const positive = good/all * 100
+
   if (all === 0) {
     return (
       <div>
@@ -30,12 +31,12 @@ const Statistics = ({good, neutral, bad}) => {
   }
   return (
     <div>
-      <Display text="good" quantity={good}/>
-      <Display text="neutral" quantity={neutral}/>
-      <Display text="bad" quantity={bad}/>
-      <Display text="all" quantity={all}/>
-      <Display text="average" quantity={average}/>
-      <Display text="positive" quantity={positive.toString().concat(" ", "%")}/>
+      <StatisticsLine text="good" quantity={good}/>
+      <StatisticsLine text="neutral" quantity={neutral}/>
+      <StatisticsLine text="bad" quantity={bad}/>
+      <StatisticsLine text="all" quantity={all}/>
+      <StatisticsLine text="average" quantity={average}/>
+      <StatisticsLine text="positive" quantity={positive.toString().concat(" ", "%")}/>
     </div>
   )
 }
