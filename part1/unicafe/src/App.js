@@ -10,9 +10,10 @@ const Button = ({text, onClick}) => {
 
 const StatisticsLine = ({text, quantity}) => {
   return (
-    <div>
-      {text} {quantity}
-    </div>
+    <tr>
+      <td>{text}</td>
+      <td>{quantity}</td>
+    </tr>
   )
 }
 
@@ -31,12 +32,16 @@ const Statistics = ({good, neutral, bad}) => {
   }
   return (
     <div>
-      <StatisticsLine text="good" quantity={good}/>
-      <StatisticsLine text="neutral" quantity={neutral}/>
-      <StatisticsLine text="bad" quantity={bad}/>
-      <StatisticsLine text="all" quantity={all}/>
-      <StatisticsLine text="average" quantity={average}/>
-      <StatisticsLine text="positive" quantity={positive.toString().concat(" ", "%")}/>
+      <table>
+        <tbody>
+          <StatisticsLine text="good" quantity={good}/>
+          <StatisticsLine text="neutral" quantity={neutral}/>
+          <StatisticsLine text="bad" quantity={bad}/>
+          <StatisticsLine text="all" quantity={all}/>
+          <StatisticsLine text="average" quantity={average}/>
+          <StatisticsLine text="positive" quantity={positive.toString().concat(" ", "%")}/>
+        </tbody>
+      </table>
     </div>
   )
 }
