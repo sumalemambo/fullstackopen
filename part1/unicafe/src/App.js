@@ -20,7 +20,14 @@ const Statistics = ({good, neutral, bad}) => {
   const all = good + neutral + bad
   const average = (good - bad)/all
   const positive = good/all * 100
+  if (all === 0) {
+    return (
+      <div>
+        <p>no feedback given</p>
+      </div>
 
+    )
+  }
   return (
     <div>
       <Display text="good" quantity={good}/>
@@ -30,7 +37,6 @@ const Statistics = ({good, neutral, bad}) => {
       <Display text="average" quantity={average}/>
       <Display text="positive" quantity={positive.toString().concat(" ", "%")}/>
     </div>
-
   )
 }
 
