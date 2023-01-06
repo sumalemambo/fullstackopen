@@ -17,11 +17,18 @@ const Display = ({text, quantity}) => {
 }
 
 const Statistics = ({good, neutral, bad}) => {
+  const all = good + neutral + bad
+  const average = (good - bad)/all
+  const positive = good/all * 100
+
   return (
     <div>
       <Display text="good" quantity={good}/>
       <Display text="neutral" quantity={neutral}/>
       <Display text="bad" quantity={bad}/>
+      <Display text="all" quantity={all}/>
+      <Display text="average" quantity={average}/>
+      <Display text="positive" quantity={positive.toString().concat(" ", "%")}/>
     </div>
 
   )
