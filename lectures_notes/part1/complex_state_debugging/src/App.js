@@ -662,6 +662,92 @@ Let's start displaying the value of the application in it's Display
 component. We will change the application by defining a new component
 inside of the App component.
 
+// This is the right place to define a component
+const Button = (props) => (
+  <div>
+    <button onClick={props.onClick}>
+      {props.text}
+    </button>
+  </div>
+)
+
+const App = () => {
+  const [value, setValue] = useState(10)
+  
+  const setToValue = (newValue) => {
+    console.log('value now', newValue)
+    setValue(newValue)
+  }
+
+  // Do not define components inside components
+  const Display = props => <div>{props.value}</div>
+
+  return (
+    <div>
+      <Display value ={value}/>
+      <Button onClick={() => setToValue(1000)} text="thousand"/>
+      <Button onClick={() => setToValue(0)} text="zero"/>
+      <Button onClick={() => setToValue(value + 1)} text="increment"/>
+    </div>
+  )
+}
+
+The application still appears to work, but DON'T IMPLEMENT COMPONENTS
+LIKE THIS!. The biggest problems are that React treats a component
+defined inside of another component as a new component in every render.
+This makes it impossible for React to optimize the component.
+
+Let's instead move the Display component function to its correct place,
+which is outside of the App component function:
+
+import { useState } from 'react'
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
+  else {
+    return (
+      <div>
+        button press history: {props.allClicks.join(' ')}
+      </div>
+    )
+  }
+}
+
+// This is the right place to define a component
+const Button = (props) => (
+  <div>
+    <button onClick={props.onClick}>
+      {props.text}
+    </button>
+  </div>
+)
+
+const Display = props => <div>{props.value}</div>
+
+const App = () => {
+  const [value, setValue] = useState(10)
+  
+  const setToValue = (newValue) => {
+    console.log('value now', newValue)
+    setValue(newValue)
+  }
+
+  return (
+    <div>
+      <Display value ={value}/>
+      <Button onClick={() => setToValue(1000)} text="thousand"/>
+      <Button onClick={() => setToValue(0)} text="zero"/>
+      <Button onClick={() => setToValue(value + 1)} text="increment"/>
+    </div>
+  )
+}
+
 */
 
 import { useState } from 'react'
@@ -683,6 +769,7 @@ const History = (props) => {
   }
 }
 
+// This is the right place to define a component
 const Button = (props) => (
   <div>
     <button onClick={props.onClick}>
@@ -690,6 +777,8 @@ const Button = (props) => (
     </button>
   </div>
 )
+
+const Display = props => <div>{props.value}</div>
 
 const App = () => {
   const [value, setValue] = useState(10)
@@ -701,7 +790,7 @@ const App = () => {
 
   return (
     <div>
-      {value}
+      <Display value ={value}/>
       <Button onClick={() => setToValue(1000)} text="thousand"/>
       <Button onClick={() => setToValue(0)} text="zero"/>
       <Button onClick={() => setToValue(value + 1)} text="increment"/>
