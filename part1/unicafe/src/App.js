@@ -8,11 +8,22 @@ const Button = ({text, onClick}) => {
   )
 }
 
-const DisplayStatistics = ({text, quantity}) => {
+const Display = ({text, quantity}) => {
   return (
     <div>
       {text} {quantity}
     </div>
+  )
+}
+
+const Statistics = ({good, neutral, bad}) => {
+  return (
+    <div>
+      <Display text="good" quantity={good}/>
+      <Display text="neutral" quantity={neutral}/>
+      <Display text="bad" quantity={bad}/>
+    </div>
+
   )
 }
 
@@ -31,9 +42,7 @@ const App = () => {
         <Button text="bad" onClick={() => setBad(bad + 1)}/>
       </div>
       <h1>statistics</h1>
-      <DisplayStatistics text="good" quantity={good}/>
-      <DisplayStatistics text="neutral" quantity={neutral}/>
-      <DisplayStatistics text="bad" quantity={bad}/>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
